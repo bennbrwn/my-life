@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ski Boot Marathon Estimator</title>
+    <style>
+        body {
+            font-family: Helvetica, sans-serif;
+            background-color: #f2f2f2;
+            color: #222;
+            text-align: center;
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 400px;
+            margin: auto;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            width: 80%;
+            font-size: 1em;
+            margin: 15px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            background-color: #444;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #666;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+
+        a.back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #0077cc;
+            text-decoration: none;
+        }
+
+        a.back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Marathon Time in Ski Boots</h1>
+        <p>Enter your foot size (in US Men's):</p>
+        <input type="number" id="footSize" placeholder="e.g., 10.5" step="0.1" min="1" max="20">
+        <br>
+        <button onclick="estimateTime()">Estimate</button>
+        <div id="result"></div>
+        <a class="back-link" href="index.html">← Back to Scratch Page</a>
+    </div>
+
+    <script>
+        function estimateTime() {
+            const size = parseFloat(document.getElementById('footSize').value);
+            const resultDiv = document.getElementById('result');
+
+            if (isNaN(size) || size < 1 || size > 20) {
+                resultDiv.textContent = "Please enter a valid foot size between 1 and 20.";
+                return;
+            }
+
+            // Arbitrary "science" for comedy
+            const baseTime = 240; // base marathon time in minutes (4 hrs)
+            const skiBootPenalty = (size - 10) * 6; // 6 min slower per size over 10
+            const estimatedTime = baseTime + skiBootPenalty;
+
+            const hours = Math.floor(estimatedTime / 60);
+            const minutes = Math.round(estimatedTime % 60);
+
+            resultDiv.innerHTML = `Estimated Time: <strong>${hours}h ${minutes}m</strong> (in ski boots, of course)`;
+        }
+    </script>
+
+</body>
+</html>
